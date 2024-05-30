@@ -1,0 +1,17 @@
+# -*-makefile-*-
+# vim:filetype=make
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Copyright 2023 Red Hat
+#
+# This makefile is used to generate the kernel stats header. It is not part of
+# the main makefile so that it can be free to include definitions from up the
+# tree.
+#
+
+SRC_DIR = ../../..
+include $(SRC_DIR)/defines
+
+.PHONY: all
+all: $(VDO_STATS_DEPS)
+	$(MAKE) -C $(VDO_STATS_DIR)

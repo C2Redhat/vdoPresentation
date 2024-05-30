@@ -1,0 +1,14 @@
+# -*-makefile-*-
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# define variables used for userLinux makefiles
+#
+# Copyright 2023 Red Hat
+#
+
+VERSION           = -DCURRENT_VERSION='"$(VDO_VERSION)"'
+INTERNAL          = -DTEST_INTERNAL -DSTATIC=
+PLATFORM_INCLUDES = -I$(PLATFORM_DIR)/uds
+
+PLATFORM_CFLAGS = $(GLOBAL_CFLAGS) $(VERSION) $(INTERNAL)	\
+		$(PLATFORM_INCLUDES)

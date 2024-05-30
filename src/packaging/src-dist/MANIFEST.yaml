@@ -1,0 +1,362 @@
+# This file is used to configure the source distribution build for VDO. It is
+# intended to be read by //eng/main/src/perl/bin/prepareSourceDist.pl. See that
+# file for a description of the syntax of this file.
+#
+# $Id$
+##
+
+treeName: vdo
+copyright: Copyright Red Hat
+licenseFile:
+  tree: vdo
+  file: src/packaging/src-dist/LICENSE.txt
+specFiles:
+  tree: vdo
+  files:
+    - src/packaging/src-dist/vdo.spec
+    - src/packaging/src-dist/kvdo.spec
+tarballs:
+  vdo:
+    versionFiles:
+      vdo: src/tools/installers/CURRENT_VERSION
+    versionFrom: vdo
+    sources:
+      vdo:
+        src/packaging/src-dist/user:
+          dest: .
+          sources:
+            - COPYING
+            - Makefile
+            - examples/Makefile
+            - examples/monitor/Makefile
+            - utils/Makefile
+            - utils/uds/Makefile
+            - utils/vdo/Makefile
+            - utils/vdo/man/Makefile
+        src/tools/adaptLVM/man:
+          dest: utils/vdo/man
+          sources:
+            - adaptlvm.8
+        src/tools/adaptLVM:
+          dest: utils/vdo
+          sources:
+            - adaptlvm
+        src/c++/vdo/base:
+          dest: utils/vdo
+          sources:
+            - constants.h
+            - encodings.c
+            - encodings.h
+            - statistics.h
+            - status-codes.c
+            - status-codes.h
+            - types.h
+          undefines:
+            - INTERNAL
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - VDO_UPSTREAM
+            - __KERNEL__
+          defines:
+            - VDO_USER
+        src/c++/vdo/user/man:
+          dest: utils/vdo/man
+          sources:
+            - vdoaudit.8
+            - vdodebugmetadata.8
+            - vdodumpblockmap.8
+            - vdodumpmetadata.8
+            - vdoforcerebuild.8
+            - vdoformat.8
+            - vdolistmetadata.8
+            - vdoreadonly.8
+            - vdostats.8
+        src/c++/vdo/user:
+          dest: utils/vdo
+          sources:
+            - blockMapUtils.[hc]
+            - fileLayer.[hc]
+            - messageStatsReader.c
+            - parseUtils.[hc]
+            - physicalLayer.h
+            - slabSummaryReader.[hc]
+            - userVDO.[hc]
+            - vdoAudit.c->vdoaudit.c
+            - vdoConfig.[hc]
+            - vdoDebugMetadata.c->vdodebugmetadata.c
+            - vdoDumpBlockMap.c->vdodumpblockmap.c
+            - vdoDumpMetadata.c->vdodumpmetadata.c
+            - vdoForceRebuild.c->vdoforcerebuild.c
+            - vdoFormat.c->vdoformat.c
+            - vdoListMetadata.c->vdolistmetadata.c
+            - vdoReadOnly.c->vdoreadonly.c
+            - vdoStats.c->vdostats.c
+            - vdoStats.h
+            - vdoStatsWriter.c
+            - vdoVolumeUtils.[hc]
+            - vdostats.bash
+          undefines:
+            - INTERNAL
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - __KERNEL__
+        src/tools/monitor:
+          dest: examples/monitor
+          sources:
+            - monitor_check_vdostats_logicalSpace.pl
+            - monitor_check_vdostats_physicalSpace.pl
+            - monitor_check_vdostats_savingPercent.pl
+        src/tools/vdorecover/man:
+          dest: utils/vdo/man
+          sources:
+            - vdorecover.8
+        src/tools/vdorecover:
+          dest: utils/vdo
+          sources:
+            - vdorecover
+        src/c++/uds/src/uds:
+          dest: utils/uds
+          sources:
+            - chapter-index.[hc]
+            - config.[hc]
+            - cpu.h
+            - dory.[hc]
+            - delta-index.[hc]
+            - errors.[hc]
+            - event-count.[hc]
+            - funnel-queue.[hc]
+            - funnel-requestqueue.h
+            - geometry.[hc]
+            - hash-utils.h
+            - index.[hc]
+            - indexer.h
+            - index-layout.[hc]
+            - index-page-map.[hc]
+            - index-session.[hc]
+            - io-factory.[hc]
+            - logger.h
+            - memory-alloc.h
+            - murmurhash3.[hc]
+            - numeric.h
+            - open-chapter.[hc]
+            - permassert.[hc]
+            - radix-sort.[hc]
+            - sparse-cache.[hc]
+            - string-utils.[hc]
+            - thread-utils.h
+            - time-utils.h
+            - volume.[hc]
+            - volume-index.[hc]
+          undefines:
+            - INTERNAL
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - __KERNEL__
+        src/c++/uds/userLinux/uds:
+          dest: utils/uds
+          sources:
+            - dm-bufio.c
+            - fileUtils.[hc]
+            - hlist.h
+            - logger.c
+            - memoryAlloc.c
+            - minisyslog.[hc]
+            - random.[hc]
+            - requestQueue.c
+            - syscalls.[hc]
+            - time-utils.c
+            - threadCondVar.c
+            - threadSemaphore.c
+            - threadMutex.c
+            - thread-utils.c
+          undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+        src/c++/uds/userLinux/uds/linux:
+          dest: utils/uds/linux
+          sources:
+            - atomic.h
+            - bitops.h
+            - bits.h
+            - blkdev.h
+            - build_bug.h
+            - cache.h
+            - compiler.h
+            - const.h
+            - compiler_attributes.h
+            - dm-bufio.h
+            - err.h
+            - limits.h
+            - log2.h
+            - mutex.h
+            - random.h
+            - types.h
+          undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - __KERNEL__
+        src/c++/uds/userLinux/uds/asm:
+          dest: utils/uds/asm
+          sources:
+            - unaligned.h
+          undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+  kvdo:
+    versionFiles:
+      vdo: src/tools/installers/CURRENT_VERSION
+    versionFrom: vdo
+    sources:
+      vdo:
+        src/packaging/src-dist/kernel:
+          dest: .
+          sources:
+            - Makefile
+        src/c++/vdo/base:
+          dest: dm-vdo
+          sources:
+            - action-manager.c
+            - action-manager.h
+            - admin-state.c
+            - admin-state.h
+            - block-map.c
+            - block-map.h
+            - completion.c
+            - completion.h
+            - constants.h
+            - data-vio.c
+            - data-vio.h
+            - dedupe.c
+            - dedupe.h
+            - dm-vdo-target.c
+            - dump.c
+            - dump.h
+            - encodings.c
+            - encodings.h
+            - flush.c
+            - flush.h
+            - funnel-workqueue.c
+            - funnel-workqueue.h
+            - histogram.c
+            - histogram.h
+            - int-map.c
+            - int-map.h
+            - io-submitter.c
+            - io-submitter.h
+            - logical-zone.c
+            - logical-zone.h
+            - message-stats.c
+            - message-stats.h
+            - packer.c
+            - packer.h
+            - physical-zone.c
+            - physical-zone.h
+            - pool-sysfs.c
+            - pool-sysfs.h
+            - pool-sysfs-stats.c
+            - priority-table.c
+            - priority-table.h
+            - recovery-journal.c
+            - recovery-journal.h
+            - repair.c
+            - repair.h
+            - slab-depot.c
+            - slab-depot.h
+            - statistics.h
+            - status-codes.c
+            - status-codes.h
+            - sysfs.c
+            - types.h
+            - vdo.c
+            - vdo.h
+            - vdo-histograms.c
+            - vdo-histograms.h
+            - vio.c
+            - vio.h
+            - wait-queue.c
+            - wait-queue.h
+          undefines:
+            - INTERNAL
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - VDO_USER
+          defines:
+            - __KERNEL__
+            - RHEL_INTERNAL
+        src/c++/uds/src/uds:
+          dest: dm-vdo
+          sources:
+            - chapter-index.c
+            - chapter-index.h
+            - config.c
+            - config.h
+            - cpu.h
+            - delta-index.c
+            - delta-index.h
+            - dory.c
+            - dory.h
+            - errors.c
+            - errors.h
+            - event-count.c
+            - event-count.h
+            - funnel-queue.c
+            - funnel-queue.h
+            - funnel-requestqueue.h
+            - geometry.c
+            - geometry.h
+            - hash-utils.h
+            - index.c
+            - index.h
+            - indexer.h
+            - index-layout.c
+            - index-layout.h
+            - index-page-map.c
+            - index-page-map.h
+            - index-session.c
+            - index-session.h
+            - io-factory.c
+            - io-factory.h
+            - logger.h
+            - memory-alloc.h
+            - murmurhash3.c
+            - murmurhash3.h
+            - numeric.h
+            - open-chapter.c
+            - open-chapter.h
+            - permassert.c
+            - permassert.h
+            - radix-sort.c
+            - radix-sort.h
+            - sparse-cache.c
+            - sparse-cache.h
+            - string-utils.c
+            - string-utils.h
+            - thread-utils.h
+            - time-utils.h
+            - volume.c
+            - volume.h
+            - volume-index.c
+            - volume-index.h
+          undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+          defines:
+            - __KERNEL__
+        src/c++/uds/kernelLinux/uds:
+          dest: dm-vdo
+          sources:
+            - funnel-requestqueue.c
+            - logger.c
+            - memory-alloc.c
+            - thread-device.c
+            - thread-device.h
+            - thread-registry.c
+            - thread-registry.h
+            - thread-utils.c
+            - uds-sysfs.c
+            - uds-sysfs.h
+          undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+          defines:
+            - __KERNEL__

@@ -1,0 +1,152 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# This file is used to configure kernel patch generation for VDO. It
+# is intended to be read by the prepareSourceDist.pl and
+# prepareGitHubDist.pl utilities. See
+# //eng/main/src/perl/Permabit/DistFramework.pm for a description of
+# the syntax of this file.
+#
+# Copyright Red Hat
+#
+
+# FIXME: Fix VDO_USE_ALTERNATE and DM_BUFIO_CLIENT_NO_SLEEP properly.
+# Forcing them here generates correct code for kernel version 6.0 and
+# later, but to be able to generate source for other kernels will
+# require a better method of resolving this kind of thing. One
+# possibility is using the EXTRAVERSION from the kernel Makefile.
+
+manifest: ../src-dist/MANIFEST.yaml
+
+tarballs:
+  kvdo:
+    sources:
+      vdo:
+        +doc:
+          dest: .
+          sources:
+            - vdo.rst
+            - vdo-design.rst
+        src/c++/vdo/base:
+          +excludes:
+            - histogram.c
+            - histogram.h
+            - pool-sysfs.c
+            - pool-sysfs.h
+            - pool-sysfs-stats.c
+            - sysfs.c
+            - vdo-histograms.c
+            - vdo-histograms.h
+          +undefines:
+            - INTERNAL
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - VDO_USER
+            - RHEL_INTERNAL
+            - RHEL_RELEASE_CODE
+            - VDO_USE_ALTERNATE
+          +defines:
+            - __KERNEL__
+            - VDO_UPSTREAM
+          +postProcessor: ../github/removeInternal.sh
+        src/c++/uds/src/uds:
+          +sources:
+            - cpu.h
+            - errors.c
+            - errors.h
+            - funnel-queue.c
+            - funnel-queue.h
+            - logger.h
+            - memory-alloc.h
+            - murmurhash3.c
+            - murmurhash3.h
+            - numeric.h
+            - permassert.c
+            - permassert.h
+            - string-utils.c
+            - string-utils.h
+            - thread-utils.h
+            - time-utils.h
+          +undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - VDO_USE_ALTERNATE
+          +defines:
+            - __KERNEL__
+            - DM_BUFIO_CLIENT_NO_SLEEP
+            - VDO_UPSTREAM
+          +postProcessor: ../github/removeInternal.sh
+        +src/c++/uds/src/uds/.:
+          dest: dm-vdo/indexer
+          sources:
+            - chapter-index.c
+            - chapter-index.h
+            - config.c
+            - config.h
+            - delta-index.c
+            - delta-index.h
+            - funnel-requestqueue.h
+            - geometry.c
+            - geometry.h
+            - hash-utils.h
+            - index.c
+            - index.h
+            - indexer.h
+            - index-layout.c
+            - index-layout.h
+            - index-page-map.c
+            - index-page-map.h
+            - index-session.c
+            - index-session.h
+            - io-factory.c
+            - io-factory.h
+            - open-chapter.c
+            - open-chapter.h
+            - radix-sort.c
+            - radix-sort.h
+            - sparse-cache.c
+            - sparse-cache.h
+            - volume.c
+            - volume.h
+            - volume-index.c
+            - volume-index.h
+          undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - VDO_USE_ALTERNATE
+          defines:
+            - __KERNEL__
+            - DM_BUFIO_CLIENT_NO_SLEEP
+            - VDO_UPSTREAM
+          postProcessor: ../github/removeInternal.sh
+        src/c++/uds/kernelLinux/uds:
+          +dest: dm-vdo
+          +sources:
+            - logger.c
+            - memory-alloc.c
+            - thread-device.c
+            - thread-device.h
+            - thread-registry.c
+            - thread-registry.h
+            - thread-utils.c
+          +undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - VDO_USE_ALTERNATE
+          +defines:
+            - __KERNEL__
+            - VDO_UPSTREAM
+          +postProcessor: ../github/removeInternal.sh
+        +src/c++/uds/kernelLinux/uds/.:
+          dest: dm-vdo/indexer
+          sources:
+            - funnel-requestqueue.c
+          undefines:
+            - TEST_INTERNAL
+            - VDO_INTERNAL
+            - VDO_USE_ALTERNATE
+          defines:
+            - __KERNEL__
+            - VDO_UPSTREAM
+          postProcessor: ../github/removeInternal.sh
+        -src/packaging/src-dist/kernel:
+        -src/packaging/src-dist/kernel/vdo:

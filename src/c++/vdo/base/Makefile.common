@@ -1,0 +1,46 @@
+# -*-makefile-*-
+# vim:filetype=make
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Copyright 2023 Red Hat
+#
+# Define variables used for vdo/base and vdo/kernel.
+#
+
+BASE_OBJS :=     			\
+	action-manager.o     		\
+	admin-state.o			\
+	block-map.o			\
+	completion.o			\
+	data-vio.o			\
+        dedupe.o                        \
+        dm-vdo-target.o                 \
+	encodings.o			\
+	flush.o				\
+	int-map.o			\
+	io-submitter.o			\
+	logical-zone.o			\
+	packer.o			\
+	physical-zone.o			\
+	pool-sysfs.o			\
+	pool-sysfs-stats.o		\
+	priority-table.o		\
+	recovery-journal.o		\
+	repair.o			\
+	slab-depot.o			\
+	status-codes.o			\
+	vdo.o				\
+	vio.o				\
+	wait-queue.o
+
+KERNEL_OBJS:=                           \
+        dump.o                          \
+        funnel-workqueue.o              \
+        histogram.o                     \
+        message-stats.o                 \
+        sysfs.o                         \
+        vdo-histograms.o
+
+USER_OBJECTS:=                  	\
+	encodings.o			\
+	status-codes.o

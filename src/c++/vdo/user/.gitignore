@@ -1,0 +1,14 @@
+corruptPBNRef
+udsCalculateSize
+vdoAudit
+vdoDebugMetadata
+vdoDumpBlockMap
+vdoDumpMetadata
+vdoFillIndex
+vdoForceRebuild
+vdoFormat
+vdoInitializeBlockMap
+vdoListMetadata
+vdoReadOnly
+vdoStats
+vdoWarmup
