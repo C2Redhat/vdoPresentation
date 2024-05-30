@@ -641,6 +641,10 @@ static int process_one_key_value_pair(const char *key, unsigned int value,
 		config->max_discard_blocks = value;
 		return VDO_SUCCESS;
 	}
+	if (strcmp(key, "discardMisaligned") == 0) {
+		config->discard_misaligned = (unsigned char)value;
+		return VDO_SUCCESS;
+	}
 	/* Handles unknown key names */
 	return process_one_thread_config_spec(key, value, &config->thread_counts);
 }
@@ -1064,6 +1068,7 @@ static void vdo_io_hints(struct dm_target *ti, struct queue_limits *limits)
 
 	limits->logical_block_size = vdo->device_config->logical_block_size;
 	limits->physical_block_size = VDO_BLOCK_SIZE;
+	limits->discard_misaligned = vdo->device_config->discard_misaligned;
 
 	/* The minimum io size for random io */
 	blk_limits_io_min(limits, VDO_BLOCK_SIZE);

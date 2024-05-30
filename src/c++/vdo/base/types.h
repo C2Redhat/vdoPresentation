@@ -226,6 +226,7 @@ struct device_config {
 	unsigned int logical_block_size;
 	unsigned int cache_size;
 	unsigned int block_map_maximum_age;
+        unsigned char discard_misaligned;
 	bool deduplication;
 	bool compression;
 	struct thread_count_config thread_counts;
